@@ -1,5 +1,5 @@
 package com.moura.model;
 
-public record Dados(Long id, double altura, double peso, double imc) {
+public record Dados(Long id, double altura, double peso, double imc, String classificação) {
 
 }
