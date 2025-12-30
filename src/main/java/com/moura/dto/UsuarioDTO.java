@@ -1,8 +1,15 @@
 package com.moura.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
+import java.util.Objects;
 
+@JsonPropertyOrder({"id" , "nome", "idade", "peso", "altura", "imc", "classificacao_IMC", "data"})
 public class UsuarioDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -13,75 +20,44 @@ public class UsuarioDTO implements Serializable {
 	private Double altura;
 	private Double peso;
 	private BigDecimal imc;
+    @JsonProperty("classificacao_IMC")
 	private String classificacao;
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private Date data;
 
-	public UsuarioDTO() {
-	}
 
-	public UsuarioDTO(Long id, String nome, int idade, double altura, double peso, BigDecimal imc,
-			String classificacao) {
-		this.id = id;
-		this.nome = nome;
-		this.idade = idade;
-		this.altura = altura;
-		this.peso = peso;
-		this.imc = imc;
-		this.classificacao = classificacao;
-	}
+	public Long getId() {return id;}
+	public void setId(Long id) {this.id = id;}
 
-	public Long getId() {
-		return id;
-	}
+	public String getNome() {return nome;}
+	public void setNome(String nome) {this.nome = nome;}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+	public int getIdade() {return idade;}
+	public void setIdade(int idade) {this.idade = idade;}
 
-	public String getNome() {
-		return nome;
-	}
+	public double getAltura() {return altura;}
+	public void setAltura(double altura) {this.altura = altura;}
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+	public double getPeso() {return peso;}
+	public void setPeso(double peso) {this.peso = peso;}
 
-	public int getIdade() {
-		return idade;
-	}
+	public BigDecimal getImc() {return imc;}
+	public void setImc(BigDecimal imc) {this.imc = imc;}
 
-	public void setIdade(int idade) {
-		this.idade = idade;
-	}
+	public String getClassificacao() {return classificacao;}
+	public void setClassificacao(String classificacao) {this.classificacao = classificacao;}
 
-	public double getAltura() {
-		return altura;
-	}
+    public Date getData() {return data;}
+    public void setData(Date data) {this.data = data;}
 
-	public void setAltura(double altura) {
-		this.altura = altura;
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof UsuarioDTO that)) return false;
+        return Objects.equals(getId(), that.getId()) && Objects.equals(getNome(), that.getNome()) && Objects.equals(getIdade(), that.getIdade()) && Objects.equals(getAltura(), that.getAltura()) && Objects.equals(getPeso(), that.getPeso()) && Objects.equals(getImc(), that.getImc()) && Objects.equals(getClassificacao(), that.getClassificacao()) && Objects.equals(getData(), that.getData());
+    }
 
-	public double getPeso() {
-		return peso;
-	}
-
-	public void setPeso(double peso) {
-		this.peso = peso;
-	}
-
-	public BigDecimal getImc() {
-		return imc;
-	}
-
-	public void setImc(BigDecimal imc) {
-		this.imc = imc;
-	}
-
-	public String getClassificacao() {
-		return classificacao;
-	}
-
-	public void setClassificacao(String classificacao) {
-		this.classificacao = classificacao;
-	}
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getNome(), getIdade(), getAltura(), getPeso(), getImc(), getClassificacao(), getData());
+    }
 }

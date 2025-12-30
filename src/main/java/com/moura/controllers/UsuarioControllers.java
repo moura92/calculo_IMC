@@ -1,9 +1,11 @@
 package com.moura.controllers;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,26 +33,32 @@ public class UsuarioControllers {
 	UsuarioServices usuarioService;
 
 	// http://localhost:8080/usuario
-	@GetMapping()
+	@GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public List<UsuarioDTO> findAll() {
 		return usuarioService.findAll();
 	}
 
 	// http://localhost:8080/1
-	@GetMapping("/{id}")
+	@GetMapping(
+            value = "/{id}",
+            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public UsuarioDTO findById(@PathVariable("id") Long id) {
-		return usuarioService.findById(id);
+        var usuario = usuarioService.findById(id);
+        usuario.setData(new Date());
+        return usuario;
 	}
 
 	// CREATE
-	@PostMapping
+	@PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	@ResponseStatus(HttpStatus.CREATED) // retorna o "201 CREATED", padrão REST.
 	public UsuarioDTO create(@RequestBody UsuarioDTO usuario) {
 		return usuarioService.create(usuario);
 	}
 
 	// UPDATE
-	@PutMapping("/{id}")
+	@PutMapping(
+            value = "/{id}",
+            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public UsuarioDTO update(@PathVariable Long id, @RequestBody UsuarioDTO usuarioDTO) {
 		usuarioDTO.setId(id);
 		return usuarioService.update(usuarioDTO);
